@@ -1,0 +1,109 @@
+# -----------------------------------------------------------------------------
+# Python caches, tests, and packaging
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# -----------------------------------------------------------------------------
+# Virtual environments
+# -----------------------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+conda-env/
+
+# -----------------------------------------------------------------------------
+# IDEs, notebooks, and OS metadata
+# -----------------------------------------------------------------------------
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -----------------------------------------------------------------------------
+# R and Node local state
+# -----------------------------------------------------------------------------
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+node_modules/
+.workbook_previews/
+
+# -----------------------------------------------------------------------------
+# Raw data, converted data, caches, and generated formal results
+# -----------------------------------------------------------------------------
+data/
+results/
+cache/
+score_cache/
+external_scores/
+converted/
+logs/
+
+# Large/intermediate scientific objects
+*.npz
+*.npy
+*.pkl
+*.pickle
+*.joblib
+*.h5ad
+*.h5
+*.rds
+*.RDS
+*.loom
+*.mtx
+*.mtx.gz
+
+# -----------------------------------------------------------------------------
+# Runtime/progress artifacts
+# -----------------------------------------------------------------------------
+*.log
+progress.json
+formal_progress.json
+.formal_progress.json*
+runtime_ledger.csv
+failure.json
+run_status.json
+run_status.csv
+
+# Local, environment-specific manuscript status
+manuscript_materials/reports/xlsx_generation_status.md
+
+# -----------------------------------------------------------------------------
+# Temporary, backup, and local patch files
+# -----------------------------------------------------------------------------
+*.tmp
+*.temp
+*.part
+*.orig
+*.rej
+*.bak
+*.bak.*
+~$*
+patch_*.py
+fix_*.py
+force_fix_*.py
+debug.py
+smoke_*.py
+!scripts/smoke_readme_examples.py
+tmp_*.py
+*_tmp.py

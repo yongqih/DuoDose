@@ -1,0 +1,201 @@
+schema_version: 2
+protocol_name: duodose_final_v2
+
+models:
+  main_model: calibrated_rf
+  main_backend: rf
+  main_public_name: DuoDose
+  main_internal_name: DuoDose-ML-CalibratedRF-SafeFeatures
+  model_revision: complexity_balance_v1
+  high_rna_negative_weight: 2.0
+  ablation_model: conditional_multitask_mlp
+  ablation_backend: dl
+  ablation_public_name: DuoDose-DL
+  ablation_internal_name: DuoDose-DL-ConditionalMultiTaskMLP-SafeFeatures
+
+construction:
+  construction_variant: raw_sum_parents_removed
+  count_construction_mode: raw_sum
+  parent_reference_mode: removed
+  safe_feature_mode: fitted_reference
+  parent_disjoint: true
+
+seeds:
+  controlled_benchmark: [0, 1, 2, 3, 4]
+  real_application: [0]
+  domain_audit: [0]
+  runtime: [0, 1, 2]
+  parameter_sensitivity: [0, 1, 2]
+
+datasets:
+  real_application:
+    - cline-ch
+    - HEK-HMEC-MULTI
+    - hm-12k
+    - hm-6k
+    - HMEC-orig-MULTI
+    - HMEC-rep-MULTI
+    - mkidney-ch
+    - nuc-MULTI
+    - pbmc-1A-dm
+    - pbmc-1B-dm
+    - pbmc-1C-dm
+    - pbmc-2ctrl-dm
+    - pbmc-2stim-dm
+    - pbmc-ch
+    - pdx-MULTI
+  real_doublet_enriched:
+    - cline-ch
+    - HEK-HMEC-MULTI
+    - hm-12k
+    - hm-6k
+    - HMEC-orig-MULTI
+    - HMEC-rep-MULTI
+    - mkidney-ch
+    - nuc-MULTI
+    - pbmc-1A-dm
+    - pbmc-1B-dm
+    - pbmc-1C-dm
+    - pbmc-2ctrl-dm
+    - pbmc-2stim-dm
+    - pbmc-ch
+    - pdx-MULTI
+  excluded:
+    J293t-dm: insufficient eligible singlets for the frozen parent-disjoint minimum
+  representative_dataset: cline-ch
+
+semi_real:
+  n_reference_singlets: 5000
+  n_train_homotypic_doublets: 500
+  n_train_heterotypic_doublets: 500
+  n_validation_homotypic_doublets: 125
+  n_validation_heterotypic_doublets: 125
+  n_test_homotypic_doublets: 250
+  n_test_heterotypic_doublets: 250
+  high_rna_quantile: 0.90
+  minimum_eligible_singlets: 200
+
+clustering:
+  n_clusters: 12
+  min_cluster_size: 10
+  n_hvgs: 2000
+  n_pcs: 40
+  n_neighbors: 30
+
+prediction:
+  expected_doublet_rate: 0.08
+  threshold_strategy: expected_rate
+  subtype_homotypic_threshold: 0.60
+  subtype_heterotypic_threshold: 0.40
+
+real_application:
+  role: qualitative_descriptive_application
+  backend: rf
+  public_method_name: DuoDose
+  internal_method_name: DuoDose-ML-CalibratedRF-SafeFeatures
+  n_hvgs: 2000
+  n_pcs: 40
+  n_neighbors: 30
+  n_clusters: 12
+  umap_min_dist: 0.35
+  diagnostic_neighbors: 30
+  external_methods: [Scrublet, DoubletFinder, scDblFinder, scds]
+  experimental_labels_overlay_only: true
+  required_real_label_metrics: []
+
+features:
+  mode: fitted_reference
+  allowlist:
+    - handcrafted_homotypic_score
+    - handcrafted_identity_mixture_score
+    - handcrafted_combined_score
+    - handcrafted_sensitive_score
+    - handcrafted_dosage_raw_score
+    - nCount
+    - log_nCount
+    - library_complexity_balance
+    - cluster_nCount_z
+    - handcrafted_homotypic_reference_score
+    - handcrafted_artificial_doublet_neighbor_score
+    - handcrafted_combined_raw_score
+    - handcrafted_artificial_doublet_compatible_score
+    - dosage_outlier_score
+    - identity_inlier_score
+    - uniform_dosage_inflation_score
+    - biological_program_coherence_score
+    - handcrafted_homotypic_candidate_score
+    - handcrafted_homotypic_dosage_score
+    - cluster_count_robust_z
+    - cluster_gene_robust_z
+    - cluster_stable_dosage_robust_z
+    - cluster_marker_dosage_robust_z
+    - dosage_residual
+  prohibited_source_tokens:
+    - benchmark
+    - true
+    - label
+    - doublet_type
+    - simulated
+    - expected
+    - y_true
+    - is_
+    - scrublet
+    - hybrid
+    - external
+
+subtypes:
+  controlled_positive_classes: [homotypic_doublet, heterotypic_doublet]
+  controlled_negative_classes: [clean, singlet, high_RNA_singlet]
+  real_label_scope: experimentally detectable doublet versus annotated negative
+  real_label_caveat: doublet-enriched datasets do not provide complete reliable homotypic ground truth
+
+evaluation:
+  primary_high_rna_fpr:
+    metric: high_RNA_singlet_FPR_at_matched_50pct_homotypic_recall
+    target_homotypic_recall: 0.50
+    role: main_text
+  supplementary_high_rna_fpr:
+    fixed_candidate_fraction: 0.20
+    matched_homotypic_recall_targets: [0.70, 0.80]
+    retain_true_doublet_budget_metric: true
+  metrics:
+    - AUROC
+    - overall_AUPRC
+    - homotypic_AUPRC
+    - heterotypic_AUPRC
+    - macro_subtype_AUPRC
+    - homotypic_vs_high_RNA_singlet_AUPRC
+    - high_RNA_singlet_FPR
+    - high_RNA_singlet_FPR_at_matched_50pct_homotypic_recall
+    - high_RNA_singlet_FPR_at_matched_70pct_homotypic_recall
+    - high_RNA_singlet_FPR_at_matched_80pct_homotypic_recall
+    - high_RNA_singlet_FPR_at_fixed_20pct_candidate_budget
+    - high_RNA_singlet_FPR_at_true_doublet_budget
+    - precision_at_K
+    - recall_at_K
+  experimental_labels_evaluation_only: true
+
+external_methods:
+  methods: [Scrublet, scDblFinder, DoubletFinder, scds]
+  fail_on_silent_omission: true
+
+runtime:
+  dataset: HMEC-orig-MULTI
+  cell_counts: [5000, 10000, 20000, largest_feasible]
+  repetitions: 3
+  methods: [DuoDose, DuoDose-DL, Scrublet, scDblFinder, DoubletFinder, scds]
+  record_components: [loading_preprocessing, safe_features, training, prediction, total]
+  record_memory: [peak_ram, peak_gpu_memory]
+
+execution:
+  device: auto
+  amp: true
+  dl_max_epochs: 200
+  dl_patience: 20
+  dl_batch_size: null
+
+parameter_sensitivity:
+  primary_backend: rf
+  expected_doublet_rates: [0.05, 0.10, 0.15]
+  semi_real_size_factors: [0.5, 1.0, 2.0]
+  select_configuration_on_test_data: false

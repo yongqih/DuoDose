@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "main_table_1": {
+    "role": "core controlled semi-real benchmark summary",
+    "metrics": [
+      "overall_AUPRC",
+      "homotypic_AUPRC",
+      "heterotypic_AUPRC",
+      "macro_subtype_AUPRC",
+      "homotypic_vs_high_RNA_singlet_AUPRC",
+      "high_RNA_singlet_FPR_at_matched_50pct_homotypic_recall"
+    ]
+  },
+  "supplementary_operating_points": [
+    "high_RNA_singlet_FPR_at_fixed_20pct_candidate_budget",
+    "high_RNA_singlet_FPR_at_matched_70pct_homotypic_recall",
+    "high_RNA_singlet_FPR_at_matched_80pct_homotypic_recall",
+    "high_RNA_singlet_FPR_at_true_doublet_budget"
+  ],
+  "real_data_stage": "real_data_application",
+  "real_data_role": "qualitative_descriptive_application",
+  "required_real_application_tables": [
+    "final_real_application_method_status.csv",
+    "final_real_application_candidate_summary.csv"
+  ],
+  "excluded_real_application_requirements": [
+    "real_label_AUROC",
+    "real_label_AUPRC",
+    "homotypic_ground_truth_metrics",
+    "heterotypic_ground_truth_metrics"
+  ]
+}

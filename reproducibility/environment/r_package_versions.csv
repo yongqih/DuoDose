@@ -1,0 +1,7 @@
+package,version
+R,4.6.1
+Matrix,1.7.5
+SingleCellExperiment,1.34.0
+scDblFinder,1.26.7
+scds,2.0.0
+DoubletFinder,2.0.6

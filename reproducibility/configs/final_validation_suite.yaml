@@ -1,0 +1,83 @@
+schema_version: 1
+suite_name: duodose_final_validation_v1
+
+contract:
+  main_public_name: DuoDose
+  main_internal_name: DuoDose-ML-CalibratedRF-SafeFeatures
+  main_backend: rf
+  high_rna_negative_weight: 2.0
+  default_backend: rf
+  ablation_public_name: DuoDose-DL
+  ablation_internal_name: DuoDose-DL-ConditionalMultiTaskMLP-SafeFeatures
+  ablation_backend: dl
+  construction_variant: raw_sum_parents_removed
+  safe_feature_mode: fitted_reference
+  parent_disjoint: true
+  seed: 0
+  numerical_tolerance: 1.0e-6
+
+protocol: final_protocol.yaml
+representative_dataset: cline-ch
+existing_domain_audit_dir: null
+
+modes:
+  smoke:
+    fixture_cells: 520
+    fixture_genes: 160
+    max_cells: 520
+    n_reference_singlets: 180
+    n_train_homotypic_doublets: 24
+    n_train_heterotypic_doublets: 24
+    n_test_homotypic_doublets: 12
+    n_test_heterotypic_doublets: 12
+    n_clusters: 4
+    min_cluster_size: 5
+    n_pcs: 10
+    n_neighbors: 8
+    dl_max_epochs: 8
+    dl_patience: 3
+    subtype_permutations: 2
+    full_label_permutations: 2
+  quick:
+    max_cells: 1200
+    n_reference_singlets: 350
+    n_train_homotypic_doublets: 60
+    n_train_heterotypic_doublets: 60
+    n_test_homotypic_doublets: 30
+    n_test_heterotypic_doublets: 30
+    n_clusters: 6
+    min_cluster_size: 6
+    n_pcs: 15
+    n_neighbors: 12
+    dl_max_epochs: 20
+    dl_patience: 5
+    subtype_permutations: 5
+    full_label_permutations: 5
+  full:
+    max_cells: null
+    use_frozen_protocol_sizes: true
+    dl_max_epochs: 200
+    dl_patience: 20
+    subtype_permutations: 100
+    full_label_permutations: 100
+
+invariance:
+  chunk_sizes: [64, 257, 113]
+  serialization_format: joblib
+
+run_status:
+  internal_methods: [DuoDose, DuoDose-DL]
+  external_methods: [Scrublet, scDblFinder, DoubletFinder, scds]
+  final_results_relative_dir: results/final_v1
+
+domain_audit:
+  required_construction_variant: raw_sum_parents_removed
+  required_safe_feature_mode: fitted_reference
+  required_semireal_subtype: heterotypic_doublet
+  permutation_testing_forbidden: true
+
+permutation_controls:
+  subtype_strategy: permute homotypic versus heterotypic labels among fit-split doublets only
+  full_label_strategy: permute complete fit-split multiclass labels while preserving class counts
+  higher_is_better_empirical_p_value: (1 + count(null >= observed)) / (1 + n_permutations)
+  lower_is_better_empirical_p_value: (1 + count(null <= observed)) / (1 + n_permutations)

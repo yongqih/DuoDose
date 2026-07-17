@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use DuoDose, please cite the software and the associated manuscript."
+title: "DuoDose"
+type: software
+version: 0.1.0
+authors:
+  - name: "Yongqi Huang"
+repository-code: "https://github.com/yongqih/DuoDose.git"
+preferred-citation:
+  type: article
+  title: "DuoDose: homotypic-aware doublet detection in single-cell RNA-seq by integrating identity and dosage evidence"
+  authors:
+    - name: "Yongqi Huang"
+  year: "2026"
+  reference: "To be added"

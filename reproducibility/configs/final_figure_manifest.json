@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "figure_1": {
+    "role": "manual concept and method schematic",
+    "generated": false
+  },
+  "figure_2": {
+    "role": "controlled semi-real benchmark",
+    "panels": [
+      "overall_AUPRC",
+      "homotypic_AUPRC",
+      "heterotypic_AUPRC",
+      "macro_subtype_AUPRC",
+      "per-dataset DuoDose advantage"
+    ]
+  },
+  "figure_3": {
+    "role": "homotypic versus high-RNA discrimination",
+    "panels": [
+      "homotypic_vs_high_RNA_singlet_AUPRC",
+      "high_RNA_singlet_FPR_at_matched_50pct_homotypic_recall",
+      "precision_at_true_doublet_budget",
+      "paired DuoDose advantage"
+    ],
+    "primary_fpr_contract": "smallest deterministic score-ranked candidate set reaching at least 50% homotypic recall"
+  },
+  "figure_4": {
+    "role": "cline-ch real-data application",
+    "layout_rows": 3,
+    "layout_columns": 3,
+    "panel_order": [
+      "clusters_or_annotations",
+      "experimental_singlet_doublet_labels",
+      "Scrublet",
+      "DoubletFinder",
+      "scDblFinder",
+      "scds",
+      "DuoDose overall doublet probability",
+      "DuoDose subtype evidence",
+      "DuoDose candidate classes at common top-K budget"
+    ]
+  },
+  "figure_5": {
+    "role": "robustness and practicality"
+  },
+  "style_contract": "Arial-first, PNG-only manuscript outputs, no composite supertitles",
+  "runtime_method_order": ["DuoDose", "DuoDose-DL", "Scrublet", "scDblFinder", "DoubletFinder", "scds"]
+}
