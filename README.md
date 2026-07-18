@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/duodose-logo.png" alt="DuoDose" width="520">
+  <img src="assets/duodose_logo.png" alt="DuoDose" width="520">
 </p>
 
 # DuoDose
