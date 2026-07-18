@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/duodose-logo.png" alt="DuoDose" width="520">
+</p>
+
 # DuoDose
 
 DuoDose is a homotypic-aware doublet detector for single-cell RNA sequencing. Its default method is a calibrated random forest trained on leakage-safe, fitted-reference features with a fixed high-RNA-singlet training weight of `2.0`; an optional conditional multitask neural-network ablation is available as `DuoDose-DL`.
